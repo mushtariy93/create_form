@@ -1,19 +1,42 @@
 import { useContext, createContext, useState, useEffect } from "react";
 
-const Context = createContext()
+const Context = createContext();
 
-export const ContextProvider = ({children})=>{ 
-    const [user, setUser] = useState([]);
-    const [count, setCount] = useState(1)
-   
-    const [wishlist, setWishlist] = useState(JSON.parse(localStorage.getItem("wishlist")) || [])
-    const [cart, setCart] = useState([])
+export const ContextProvider = ({ children }) => {
+  const [user, setUser] = useState([]);
+  const [count, setCount] = useState(1);
 
-    useEffect(()=>{
-        localStorage.setItem("wishlist", JSON.stringify(wishlist))
-    }, [wishlist])
+  const [wishlist, setWishlist] = useState(
+    JSON.parse(localStorage.getItem("wishlist")) || []
+  );
+  const [cart, setCart] = useState(
+    JSON.parse(localStorage.getItem("cart")) || []
+  );
 
-    return <Context.Provider value={{count, setCount, wishlist, setWishlist, cart, setCart,user,setUser}}>{children}</Context.Provider>
-}
+  useEffect(() => {
+    localStorage.setItem("wishlist", JSON.stringify(wishlist));
+  }, [wishlist]);
 
-export const useStateValue = () => useContext(Context) 
+  useEffect(() => {
+    localStorage.setItem("cart", JSON.stringify(cart));
+  }, [cart]);
+
+  return (
+    <Context.Provider
+      value={{
+        count,
+        setCount,
+        wishlist,
+        setWishlist,
+        cart,
+        setCart,
+        user,
+        setUser,
+      }}
+    >
+      {children}
+    </Context.Provider>
+  );
+};
+
+export const useStateValue = () => useContext(Context);

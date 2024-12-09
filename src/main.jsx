@@ -3,6 +3,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter as Router } from "react-router-dom";
 import { ContextProvider } from "./context/index.jsx";
+import "number-brm";
 createRoot(document.getElementById("root")).render(
   <Router>
     <ContextProvider>
